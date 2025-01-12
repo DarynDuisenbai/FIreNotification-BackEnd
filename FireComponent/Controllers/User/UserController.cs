@@ -1,20 +1,50 @@
-﻿using Application.Handlers.User;
+﻿using Application.DTOs;
+using Application.Handlers.User;
+using Application.Interfaces;
 using DnsClient;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Controllers.Base;
 
 namespace WebApi.Controllers.User
 {
-    [Produces("application/json")]
-    [AllowAnonymous]
-    public class UserController : MediatrControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
     {
-        [HttpPost(ApiRoutes.Users.Register)]
-        public async Task<IActionResult> RefreshToken([FromBody] Register.RegisterUserCommand command, CancellationToken cancellationToken)
+        private readonly IAuthService _authService;
+
+        public UserController(IAuthService authService)
         {
-            return Ok(await Mediator!.Send(command, cancellationToken));
+            _authService = authService;
+        }
+
+        [HttpPost(ApiRoutes.Users.Register)]
+        public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto model)
+        {
+            try
+            {
+                var result = await _authService.RegisterAsync(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost(ApiRoutes.Users.Login)]
+        public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto model)
+        {
+            try
+            {
+                var result = await _authService.LoginAsync(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

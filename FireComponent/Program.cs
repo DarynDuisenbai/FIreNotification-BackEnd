@@ -1,68 +1,84 @@
-using Microsoft.AspNetCore.Localization;
-using System.Globalization;
+using Application.Handlers.User;
+using Application.Interfaces;
+using Infrastructure.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllersWithViews();
-builder.Services.AddLocalization(opt => opt.ResourcesPath = "Resources");
 
+// Add services to the container
+builder.Services.Configure<MongoDbSettings>(
+    builder.Configuration.GetSection("MongoDbSettings"));
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings"));
 
-builder.Services
-        .AddApplication(builder.Configuration)
-        .AddInfrastructure(builder.Configuration)
-        .AddPersistence(builder.Configuration)
-        .AddResources();
+// Регистрация сервисов
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin", builder =>
+// Настройка JWT аутентификации
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
+        var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+        };
+    });
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
     });
 });
 
-builder.Services
-        .ConfigureHttpClients(builder.Configuration)
-        .ConfigureAuth(builder.Configuration)
-        .AddSwaggerGen()
-        ;
-
 var app = builder.Build();
-app.UseRequestLocalization(opt =>
+
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
 {
-    var supportedCultures = new List<CultureInfo>
-    {
-        new CultureInfo("kk"),
-        new CultureInfo("en"),
-        new CultureInfo("ru")
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-    };
-    opt.DefaultRequestCulture = new RequestCulture("ru");
-    opt.SupportedCultures = supportedCultures;
-    opt.SupportedUICultures = supportedCultures;
-});
+app.UseHttpsRedirection();
 
-app.UseSwagger();
-app.UseSwaggerUI(opt =>
-{
-    opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-});
-
-app.UseCustomExceptionHandler();
-app.UseStaticFiles();
-app.UseRouting();
-app.UseCors("AllowAnyOrigin");
-
-app.UseAuthentication();
+// Важно: порядок middleware имеет значение!
+app.UseAuthentication(); // Добавьте эту строку
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "api/*");
-
-
+app.MapControllers();
 
 app.Run();
-
-

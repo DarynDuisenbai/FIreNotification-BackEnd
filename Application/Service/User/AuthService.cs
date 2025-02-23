@@ -28,13 +28,11 @@ namespace Application.Service.User
 
         public async Task<AuthResponseDto> RegisterAsync(RegisterDto model)
         {
-            // Проверка на существующего пользователя
             if (await _users.Find(x => x.Email == model.Email).AnyAsync())
             {
                 throw new Exception("User with this email already exists");
             }
 
-            // Создание нового пользователя
             var user = new Domain.Entities.Identity.User
             {
                 Id = ObjectId.GenerateNewId().ToString(),
@@ -46,7 +44,6 @@ namespace Application.Service.User
 
             await _users.InsertOneAsync(user);
 
-            // Генерация токена
             var token = GenerateJwtToken(user);
 
             return new AuthResponseDto
@@ -81,10 +78,10 @@ namespace Application.Service.User
 
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Name, user.Username)
-        };
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.Username)
+            };
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Value.Issuer,

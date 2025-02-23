@@ -1,9 +1,5 @@
-﻿using Application.DTOs;
-using Application.Handlers.User;
+﻿using Application.DTOs.Identity;
 using Application.Interfaces;
-using DnsClient;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.User

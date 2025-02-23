@@ -1,5 +1,4 @@
-﻿using Application.DTOs;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -8,8 +7,9 @@ using System.Text;
 using Infrastructure.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Application.DTOs.Identity;
 
-namespace Application.Handlers.User
+namespace Application.Service.User
 {
     public class AuthService : IAuthService
     {

@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "3rhS6UwBAUh6X/1Frz3eBG3BtZoPLZlLbMm/DdOA7cQ=",
+  "Hash": "d1LYANFq5UKcXGyYUUx4PA2mjmw21rUK5f7On3AcZxY=",
   "Source": "WebApi",
   "BasePath": "_content/WebApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\C#\\FireComponent\\Application\\Application.csproj",
+      "Identity": "C:\\Pet Projects\\FireComponent\\Application\\Application.csproj",
       "Version": 2,
       "Source": "Application",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
@@ -18,20 +18,9 @@
       "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
     },
     {
-      "Identity": "C:\\C#\\FireComponent\\Domain\\Domain.csproj",
+      "Identity": "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj",
       "Version": 2,
       "Source": "Domain",
-      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
-      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
-      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
-      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
-    },
-    {
-      "Identity": "C:\\C#\\FireComponent\\Infrastructure\\Infrastructure.csproj",
-      "Version": 2,
-      "Source": "Infrastructure",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
       "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
       "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",

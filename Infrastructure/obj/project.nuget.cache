@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "osnro1Km9FWixnb+9sRT1lpBSsyFv34fLX8vqpRgYxhwkifF3XgjktOX0VG4dHSnimYmxGd/awP9qTy+L9KaTw==",
+  "dgSpecHash": "lWyYwnTa6Dc5ey0jxPeEup1KIP/aFj3dwKPuTV6QSVmdIFSH6aFiDJIUf6ryQobNkoNDAHP9WhiBD+xeK8mVjQ==",
   "success": true,
-  "projectFilePath": "C:\\C#\\FireComponent\\Infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "C:\\Pet Projects\\FireComponent\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mediatr\\10.0.0\\mediatr.10.0.0.nupkg.sha512",

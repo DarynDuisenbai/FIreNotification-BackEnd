@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Identity;
 
 namespace Application.Interfaces
 {

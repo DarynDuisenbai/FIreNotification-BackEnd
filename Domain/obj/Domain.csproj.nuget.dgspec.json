@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\C#\\FireComponent\\Domain\\Domain.csproj": {}
+    "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "C:\\C#\\FireComponent\\Domain\\Domain.csproj": {
+    "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\C#\\FireComponent\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\C#\\FireComponent\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\C#\\FireComponent\\Domain\\obj\\",
+        "outputPath": "C:\\Pet Projects\\FireComponent\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,7 +50,7 @@
             },
             "MongoDB.Entities": {
               "target": "Package",
-              "version": "[24.1.0, )"
+              "version": "[23.1.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

@@ -1,23 +1,38 @@
-using Application.Handlers.User;
 using Application.Interfaces;
+using Application.Service.BackService;
+using Application.Service.User;
 using Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using MediatR;
+using Application.Handlers.NasaHandler;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+// Читаем строку подключения из конфигурации
+var mongoSettings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
+var mongoClient = new MongoClient(mongoSettings.ConnectionString);
+var database = mongoClient.GetDatabase(mongoSettings.DatabaseName);
+
+// Регистрируем IMongoDatabase
+builder.Services.AddSingleton<IMongoDatabase>(database);
+
+// Добавляем MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(GetFiresByDateCommand).Assembly));
+
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
-builder.Services.Configure<JwtSettings>(
-    builder.Configuration.GetSection("JwtSettings"));
 
 // Регистрация сервисов
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddHttpClient<NasaFirmsService>();
+builder.Services.AddSingleton<FireDataCleanupService>();
+builder.Services.AddHostedService<CoordinationService>();
 
-// Настройка JWT аутентификации
+// Настройка JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -39,7 +54,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FireComponent", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme",
@@ -66,17 +81,14 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-// Важно: порядок middleware имеет значение!
-app.UseAuthentication(); // Добавьте эту строку
+// Важно: порядок middleware
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "8OjCBM/KBzc9C9pmNu7U3rofzquL8GyaK1X+TCu7wKY=",
+  "Hash": "iPZ+PW6ML03WE/ThYyVbdWZ6lg5dWdRCBBK0bA+ytaM=",
   "Source": "Infrastructure",
   "BasePath": "_content/Infrastructure",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\C#\\FireComponent\\Domain\\Domain.csproj",
+      "Identity": "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj",
       "Version": 2,
       "Source": "Domain",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",

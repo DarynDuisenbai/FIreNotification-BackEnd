@@ -39,7 +39,8 @@ namespace Application.Handlers.NasaHandler
                 Latitude = f["Latitude"].AsDouble,
                 Longitude = f["Longitude"].AsDouble,
                 Address = f.Contains("Address") ? f["Address"].AsString : null,
-                Time_fire = f["Time_fire"].ToUniversalTime()
+                Time_fire = f["Time_fire"].ToUniversalTime(),
+                Photo = f.Contains("Photo") ? f["Photo"].AsString : null,
             }).ToList();
         }
     }

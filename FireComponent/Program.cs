@@ -33,6 +33,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpClient<NasaFirmsService>();
 builder.Services.AddSingleton<FireDataCleanupService>();
 builder.Services.AddHostedService<CoordinationService>();
+builder.Services.AddSingleton<SatelliteImageService>();
 
 // Настройка JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

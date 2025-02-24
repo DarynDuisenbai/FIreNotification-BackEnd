@@ -15,16 +15,19 @@ namespace Application.Service.BackService
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
         private readonly IMongoCollection<FireData> _fireCollection;
+        private readonly SatelliteImageService _satelliteImageService;
 
         public NasaFirmsService(
             ILogger<NasaFirmsService> logger,
             IConfiguration configuration,
             HttpClient httpClient,
-            IOptions<MongoDbSettings> mongoSettings)
+            IOptions<MongoDbSettings> mongoSettings,
+            SatelliteImageService satelliteImageService)
         {
             _logger = logger;
             _configuration = configuration;
             _httpClient = httpClient;
+            _satelliteImageService = satelliteImageService;
 
             var mongoClient = new MongoClient(mongoSettings.Value.ConnectionString);
             var database = mongoClient.GetDatabase(mongoSettings.Value.DatabaseName);
@@ -82,7 +85,7 @@ namespace Application.Service.BackService
 
             var address = await GetAddressFromCoordinates(dto.Latitude, dto.Longitude);
 
-            return new FireData
+            var fireData = new FireData
             {
                 Id = Guid.NewGuid().ToString(),
                 Latitude = dto.Latitude,
@@ -92,6 +95,10 @@ namespace Application.Service.BackService
                 Time_fire = fireTime,
                 Request_Time = DateTime.UtcNow
             };
+
+            await _satelliteImageService.ProcessSatelliteImage(fireData);
+
+            return fireData;
         }
 
         private async Task SaveToDatabase(FireData fireData)

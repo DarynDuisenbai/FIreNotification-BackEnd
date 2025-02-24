@@ -13,5 +13,6 @@ namespace Domain.Entities.FireData
         public string? Address { get; set; }
         public DateTime Time_fire { get; set; }
         public DateTime Request_Time { get; set; }
+        public string Photo {  get; set; }
     }
 }

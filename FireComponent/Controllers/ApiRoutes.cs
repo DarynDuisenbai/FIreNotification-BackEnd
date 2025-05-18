@@ -13,6 +13,7 @@
         public static class Fire
         {
             public const string GetFiresByDate = Base + "/fires/fireByDate";
+            public const string GetFireImage = Base + "/fires/fireImage";
         }
     }
 }

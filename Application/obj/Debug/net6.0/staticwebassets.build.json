@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "ernPVyqhPsx1QfoTzHfnAEu2w2mBmZ/aVvRYnlnv3yU=",
+  "Hash": "1d9bN2btt1FvqHKUzDTIDcv19VK5DA4lft4X0cVrmJ4=",
   "Source": "Application",
   "BasePath": "_content/Application",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj",
+      "Identity": "C:\\Pet Projects\\C#\\Diplomka_Back\\Domain\\Domain.csproj",
       "Version": 2,
       "Source": "Domain",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",

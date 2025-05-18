@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "d1LYANFq5UKcXGyYUUx4PA2mjmw21rUK5f7On3AcZxY=",
+  "Hash": "/xNtEihfZBglTzGu0qGcWnI4gPiOBIu8HCTw5Q4hLOI=",
   "Source": "WebApi",
   "BasePath": "_content/WebApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Pet Projects\\FireComponent\\Application\\Application.csproj",
+      "Identity": "C:\\Pet Projects\\C#\\Diplomka_Back\\Application\\Application.csproj",
       "Version": 2,
       "Source": "Application",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
@@ -18,7 +18,7 @@
       "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
     },
     {
-      "Identity": "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj",
+      "Identity": "C:\\Pet Projects\\C#\\Diplomka_Back\\Domain\\Domain.csproj",
       "Version": 2,
       "Source": "Domain",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",

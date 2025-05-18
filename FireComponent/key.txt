@@ -1,1 +1,2 @@
 ﻿nasa_map_key = a1c8432184d725d71c07c4910d38c05f
+google_map_key = AIzaSyAEnkGw8-2rDXLGwMrquHIwJBv2nmKlRP4

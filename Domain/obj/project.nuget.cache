@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pwn58+NwwaenJjjWLQ57dqjnDorZVN7RhLEHnGZ/Qh77Jr/Hvjc9EhERUbRAUkadUlKC2cFJ7mxXHUa5EG56mg==",
+  "dgSpecHash": "C8p2dexzhFd9TsKu2H9g5D7FZOQGOafeKa17ZPWlZO+qgp3wt0p8N/RaDpd83QHLayyFV5N96j+bzXrz3u9Zyw==",
   "success": true,
-  "projectFilePath": "C:\\Pet Projects\\FireComponent\\Domain\\Domain.csproj",
+  "projectFilePath": "C:\\Pet Projects\\C#\\Diplomka_Back\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

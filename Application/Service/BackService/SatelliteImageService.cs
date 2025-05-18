@@ -3,6 +3,7 @@ using Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
+
 namespace Application.Service.BackService
 {
     public class SatelliteImageService
@@ -10,8 +11,9 @@ namespace Application.Service.BackService
         private readonly ILogger<SatelliteImageService> _logger;
         private readonly HttpClient _httpClient;
         private readonly IMongoCollection<FireData> _fireCollection;
-        private const double KM_PER_DEGREE_LAT = 111.32; 
-        private const double BBOX_SIZE_KM = 5.0; 
+
+        private const double KM_PER_DEGREE_LAT = 111.32;
+        private const double BBOX_SIZE_KM = 25;
 
         public SatelliteImageService(
             ILogger<SatelliteImageService> logger,
@@ -47,74 +49,55 @@ namespace Application.Service.BackService
         private (double minLon, double minLat, double maxLon, double maxLat) CalculateBoundingBox(double centerLat, double centerLon)
         {
             double kmPerDegreeLon = KM_PER_DEGREE_LAT * Math.Cos(Math.PI * centerLat / 180.0);
-
             double latOffset = BBOX_SIZE_KM / KM_PER_DEGREE_LAT;
             double lonOffset = BBOX_SIZE_KM / kmPerDegreeLon;
 
             return (
-                minLon: centerLon - lonOffset,
-                minLat: centerLat - latOffset,
-                maxLon: centerLon + lonOffset,
-                maxLat: centerLat + latOffset
+                centerLon - lonOffset,
+                centerLat - latOffset,
+                centerLon + lonOffset,
+                centerLat + latOffset
             );
         }
 
-        private async Task<string> GetSatelliteImage((double minLon, double minLat, double maxLon, double maxLat) bbox, DateTime fireTime)
+        private async Task<string> GetSatelliteImage((double minLon, double minLat, double maxLon, double maxLat) bbox, DateTime time)
         {
             try
             {
-                var date = fireTime.ToString("yyyy-MM-dd");
-                var bboxString = $"{bbox.minLon},{bbox.minLat},{bbox.maxLon},{bbox.maxLat}";
+                long timestamp = new DateTimeOffset(time).ToUnixTimeMilliseconds();
 
-                var url = $"https://wvs.earthdata.nasa.gov/api/v1/snapshot" +
-                    $"?REQUEST=GetSnapshot" +
-                    $"&LAYERS=VIIRS_NOAA20_CorrectedReflectance_TrueColor,VIIRS_NOAA20_Thermal_Anomalies_375m_Day" +
-                    $"&CRS=EPSG:4326" +
-                    $"&TIME={date}" +
-                    $"&WRAP=DAY,DAY" +
-                    $"&BBOX={bboxString}" +
-                    $"&FORMAT=image/jpeg" +
-                    $"&WIDTH=800" +
-                    $"&HEIGHT=800" +
-                    $"&AUTOSCALE=TRUE";
+                string url = $"https://wvs.earthdata.nasa.gov/api/v1/snapshot" +
+                             $"?REQUEST=GetSnapshot" +
+                             $"&LAYERS=VIIRS_SNPP_CorrectedReflectance_BandsM11-I2-I1,VIIRS_SNPP_Thermal_Anomalies_375m_Day,Reference_Features_15m" +
+                             $"&CRS=EPSG:4326" +
+                             $"&TIME={time:yyyy-MM-dd}" +
+                             $"&WRAP=DAY,DAY,X" +
+                             $"&BBOX={bbox.minLon},{bbox.minLat},{bbox.maxLon},{bbox.maxLat}" +
+                             $"&FORMAT=image/jpeg" +
+                             $"&WIDTH=512&HEIGHT=512" +
+                             $"&AUTOSCALE=TRUE" +
+                             $"&ts={timestamp}";
 
                 var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    _logger.LogError($"Failed to get satellite image. Status code: {response.StatusCode}");
-                    return null;
-                }
+                response.EnsureSuccessStatusCode();
 
                 var imageBytes = await response.Content.ReadAsByteArrayAsync();
                 return Convert.ToBase64String(imageBytes);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting satellite image");
+                _logger.LogError(ex, "Error retrieving satellite image.");
                 return null;
             }
         }
 
         private async Task UpdateFireDataWithImage(FireData fireData, string imageBase64)
         {
-            var filter = Builders<FireData>.Filter.And(
-                Builders<FireData>.Filter.Eq(x => x.Latitude, fireData.Latitude),
-                Builders<FireData>.Filter.Eq(x => x.Longitude, fireData.Longitude)
-            );
+            var filter = Builders<FireData>.Filter.Eq(f => f.Id, fireData.Id);
+            var update = Builders<FireData>.Update.Set(f => f.Photo, imageBase64);
 
-            var update = Builders<FireData>.Update.Set(x => x.Photo, imageBase64);
-
-            var result = await _fireCollection.UpdateOneAsync(filter, update);
-
-            if (result.ModifiedCount == 0)
-            {
-                _logger.LogWarning($"No document was updated for coordinates: Lat={fireData.Latitude}, Lon={fireData.Longitude}, Time={fireData.Time_fire}");
-            }
-            else
-            {
-                _logger.LogInformation($"Successfully updated fire data with image for coordinates: Lat={fireData.Latitude}, Lon={fireData.Longitude}");
-            }
+            await _fireCollection.UpdateOneAsync(filter, update);
         }
     }
 }
+

@@ -1,4 +1,5 @@
 ﻿using Application.Handlers.NasaHandler;
+using Domain.Entities.FireData;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

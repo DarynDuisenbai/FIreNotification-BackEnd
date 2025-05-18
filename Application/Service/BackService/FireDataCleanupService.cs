@@ -29,7 +29,7 @@ namespace Application.Service.BackService
                 _logger.LogInformation("Очистка дубликатов завершена. Следующий запуск через 1 час.");
 
                 // Запуск очистки раз в 1 час
-                await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
             }
         }
 

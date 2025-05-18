@@ -96,8 +96,6 @@ namespace Application.Service.BackService
                 Request_Time = DateTime.UtcNow
             };
 
-            await _satelliteImageService.ProcessSatelliteImage(fireData);
-
             return fireData;
         }
 
@@ -117,6 +115,9 @@ namespace Application.Service.BackService
                 {
                     await _fireCollection.InsertOneAsync(fireData);
                     _logger.LogInformation($"Saved new fire data: Lat={fireData.Latitude}, Lon={fireData.Longitude}, Time={fireData.Time_fire}");
+
+                    // Получаем изображение только после сохранения записи в базу данных
+                    await _satelliteImageService.ProcessSatelliteImage(fireData);
                 }
                 else
                 {

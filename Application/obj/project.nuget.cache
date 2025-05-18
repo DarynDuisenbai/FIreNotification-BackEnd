@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2nu1YQKpAzdaEKVoFbTeSEy/9BSJIaAiegSwjN4AQcLj5FtvrU9neN9G2wWS7vGIJ2c993l8GoPnxGz4CzrVug==",
+  "dgSpecHash": "b4KxDnPpPHrG4oUifsiKYmZJZ7Ygs+jCV3Ciaec2vzaSSEFTppdA4Gf2nyo9SY7Dhj9K6G+hIzkpe5AYrgr9IQ==",
   "success": true,
-  "projectFilePath": "C:\\Pet Projects\\FireComponent\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Pet Projects\\C#\\Diplomka_Back\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512",

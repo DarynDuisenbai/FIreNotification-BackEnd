@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IChdb5qQj1eswWUmG/uXpgNRdpRFaW9JMbSmmkECoWquuNkGHZk7AFGuyvgakaqVgxPPjOTXIK7t0vuZMv1grA==",
+  "dgSpecHash": "iXQZTPYLIR8wGCB1s6mBTmOwClZGaxz/JNE4S2dhkIHjnhmhpJf3e4RwM19cmshkh92A5ai5hwFyJ0LV9d9ypw==",
   "success": true,
-  "projectFilePath": "C:\\Pet Projects\\FireComponent\\FireComponent\\WebApi.csproj",
+  "projectFilePath": "C:\\Pet Projects\\C#\\Diplomka_Back\\FireComponent\\WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\aspnetcore.identity.mongo\\9.1.2\\aspnetcore.identity.mongo.9.1.2.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",

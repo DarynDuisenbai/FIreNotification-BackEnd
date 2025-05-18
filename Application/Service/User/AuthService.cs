@@ -38,6 +38,7 @@ namespace Application.Service.User
                 Id = ObjectId.GenerateNewId().ToString(),
                 Username = model.Username,
                 Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 CreatedAt = DateTime.UtcNow
             };
@@ -80,6 +81,7 @@ namespace Application.Service.User
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber),
                 new Claim(ClaimTypes.Name, user.Username)
             };
 

@@ -17,5 +17,9 @@
             public const string GetFiresByDate = Base + "/fires/fireByDate";
             public const string SaveCrowdData = Base + "/fires/saveCrowdData";
         }
+        public static class CrowdData
+        {
+            public const string GetCrowdDataByUserId = Base + "/crowd/user/firedata";
+        }
     }
 }

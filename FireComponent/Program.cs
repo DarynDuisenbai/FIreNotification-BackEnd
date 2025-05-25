@@ -9,7 +9,7 @@ using System.Text;
 using MediatR;
 using Application.Handlers.NasaHandler;
 using MongoDB.Driver;
-using Application.Service;
+using Application.Service.CrowdService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +38,7 @@ builder.Services.AddHttpClient<NasaFirmsService>();
 builder.Services.AddSingleton<FireDataCleanupService>();
 builder.Services.AddHostedService<CoordinationService>();
 builder.Services.AddScoped<IPhotoVerificationService, PhotoVerificationService>();
+builder.Services.AddScoped<ICrowdService, CrowdService>();
 
 // Настройка JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

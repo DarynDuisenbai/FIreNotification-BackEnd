@@ -9,9 +9,9 @@ using MongoDB.Driver;
 using Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 
-namespace Application.Service
+namespace Application.Service.CrowdService
 {
-    public class PhotoVerificationService: IPhotoVerificationService
+    public class PhotoVerificationService : IPhotoVerificationService
     {
         private readonly IMongoCollection<CrowdSourcingData> _crowdSourcingData;
         public PhotoVerificationService(IOptions<MongoDbSettings> mongoSettings)

@@ -13,5 +13,6 @@ namespace Domain.Entities.Identity
         public string PasswordHash { get; set; }
         public Roles Roles { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string Photo {  get; set; }
     }
 }

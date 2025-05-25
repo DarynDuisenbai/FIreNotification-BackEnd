@@ -56,5 +56,19 @@ namespace WebApi.Controllers.User
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpPut(ApiRoutes.Users.UploadProfilePhoto)]
+        public async Task<ActionResult<bool>> UploadProfilePhoto([FromBody] EditProfilePhotoDto req)
+        {
+            try
+            {
+                var result = await _authService.UploadProfilePhoto(req);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

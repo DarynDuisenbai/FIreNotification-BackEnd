@@ -10,6 +10,7 @@
             public const string Register = Base + "/users/register";
             public const string Login = Base + "/users/login";
             public const string ChangeRole = Base + "/users/changeRole";
+            public const string UploadProfilePhoto = Base + "/users/uploadProfilePhoto";
         }
         public static class Fire
         {

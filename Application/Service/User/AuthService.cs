@@ -108,6 +108,15 @@ namespace Application.Service.User
 
             return result.ModifiedCount > 0;
         }
+        public async Task<bool> UploadProfilePhoto(EditProfilePhotoDto req)
+        {
+            var filter = Builders<Domain.Entities.Identity.User>.Filter.Eq(u => u.Id, req.UserId);
+            var update = Builders<Domain.Entities.Identity.User>.Update.Set(u => u.Photo, req.Photo);
+
+            var result = await _users.UpdateOneAsync(filter, update);
+
+            return result.ModifiedCount > 0;
+        }
 
     }
 }

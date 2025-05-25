@@ -4,18 +4,15 @@
     {
         private readonly NasaFirmsService _nasaFirmsService;
         private readonly FireDataCleanupService _cleanupService;
-        private readonly SatelliteImageService _imageService;
         private readonly ILogger<CoordinationService> _logger;
 
         public CoordinationService(
             NasaFirmsService nasaFirmsService,
             FireDataCleanupService cleanupService,
-            SatelliteImageService imageService,
             ILogger<CoordinationService> logger)
         {
             _nasaFirmsService = nasaFirmsService;
             _cleanupService = cleanupService;
-            _imageService = imageService;
             _logger = logger;
         }
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "b4KxDnPpPHrG4oUifsiKYmZJZ7Ygs+jCV3Ciaec2vzaSSEFTppdA4Gf2nyo9SY7Dhj9K6G+hIzkpe5AYrgr9IQ==",
+  "dgSpecHash": "Y+Lu5iF64c1hkbEP1o0U6tZ9HEJ+zjZhROipaxo/8tKK1Xd1pIPBFjTa26fzwUQGSsCwYqlVWgdK5ThEe+5D8Q==",
   "success": true,
   "projectFilePath": "C:\\Pet Projects\\C#\\Diplomka_Back\\Application\\Application.csproj",
   "expectedPackageFiles": [
@@ -30,6 +30,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\mongodb.entities\\23.1.0\\mongodb.entities.23.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\sharpcompress\\0.30.1\\sharpcompress.0.30.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\sixlabors.imagesharp\\3.1.8\\sixlabors.imagesharp.3.1.8.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\snappier\\1.0.0\\snappier.1.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",

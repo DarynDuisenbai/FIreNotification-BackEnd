@@ -15,20 +15,16 @@ namespace Application.Service.BackService
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
         private readonly IMongoCollection<FireData> _fireCollection;
-        private readonly SatelliteImageService _satelliteImageService;
 
         public NasaFirmsService(
             ILogger<NasaFirmsService> logger,
             IConfiguration configuration,
             HttpClient httpClient,
-            IOptions<MongoDbSettings> mongoSettings,
-            SatelliteImageService satelliteImageService)
+            IOptions<MongoDbSettings> mongoSettings)
         {
             _logger = logger;
             _configuration = configuration;
             _httpClient = httpClient;
-            _satelliteImageService = satelliteImageService;
-
             var mongoClient = new MongoClient(mongoSettings.Value.ConnectionString);
             var database = mongoClient.GetDatabase(mongoSettings.Value.DatabaseName);
             _fireCollection = database.GetCollection<FireData>(nameof(FireData));
@@ -115,9 +111,6 @@ namespace Application.Service.BackService
                 {
                     await _fireCollection.InsertOneAsync(fireData);
                     _logger.LogInformation($"Saved new fire data: Lat={fireData.Latitude}, Lon={fireData.Longitude}, Time={fireData.Time_fire}");
-
-                    // Получаем изображение только после сохранения записи в базу данных
-                    await _satelliteImageService.ProcessSatelliteImage(fireData);
                 }
                 else
                 {

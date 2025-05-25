@@ -43,8 +43,8 @@ namespace WebApi.Controllers.User
             }
         }
 
-        [HttpPut(ApiRoutes.Users.Login)]
-        public async Task<ActionResult<AuthResponseDto>> ChangeRole([FromBody] ChangeRole model)
+        [HttpPut(ApiRoutes.Users.ChangeRole)]
+        public async Task<ActionResult<bool>> ChangeRole([FromBody] ChangeRole model)
         {
             try
             {

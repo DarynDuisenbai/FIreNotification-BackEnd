@@ -222,3 +222,4 @@ C:\Pet Projects\C#\Diplomka_Back\FireComponent\obj\Debug\net6.0\refint\WebApi.dl
 C:\Pet Projects\C#\Diplomka_Back\FireComponent\obj\Debug\net6.0\WebApi.pdb
 C:\Pet Projects\C#\Diplomka_Back\FireComponent\obj\Debug\net6.0\WebApi.genruntimeconfig.cache
 C:\Pet Projects\C#\Diplomka_Back\FireComponent\obj\Debug\net6.0\ref\WebApi.dll
+C:\Pet Projects\C#\Diplomka_Back\FireComponent\bin\Debug\net6.0\SixLabors.ImageSharp.dll

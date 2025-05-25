@@ -6,5 +6,6 @@ namespace Application.Interfaces
     {
         Task<AuthResponseDto> RegisterAsync(RegisterDto model);
         Task<AuthResponseDto> LoginAsync(LoginDto model);
+        Task<bool> ChangeUserRoleAsync(ChangeRole model);
     }
 }

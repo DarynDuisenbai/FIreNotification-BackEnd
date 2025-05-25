@@ -8,6 +8,7 @@ using Infrastructure.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Application.DTOs.Identity;
+using Domain.Entities.Identity.Enums;
 
 namespace Application.Service.User
 {
@@ -40,6 +41,7 @@ namespace Application.Service.User
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
+                Roles = model.Role,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -50,7 +52,8 @@ namespace Application.Service.User
             return new AuthResponseDto
             {
                 Token = token,
-                Username = user.Username
+                Username = user.Username,
+                UserId = user.Id
             };
         }
 
@@ -68,7 +71,8 @@ namespace Application.Service.User
             return new AuthResponseDto
             {
                 Token = token,
-                Username = user.Username
+                Username = user.Username,
+                UserId = user.Id
             };
         }
 
@@ -95,5 +99,15 @@ namespace Application.Service.User
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public async Task<bool> ChangeUserRoleAsync(ChangeRole model)
+        {
+            var filter = Builders<Domain.Entities.Identity.User>.Filter.Eq(u => u.Username, model.Username);
+            var update = Builders<Domain.Entities.Identity.User>.Update.Set(u => u.Roles, model.Role);
+
+            var result = await _users.UpdateOneAsync(filter, update);
+
+            return result.ModifiedCount > 0;
+        }
+
     }
 }

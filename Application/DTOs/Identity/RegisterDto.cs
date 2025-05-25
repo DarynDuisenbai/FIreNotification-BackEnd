@@ -1,4 +1,6 @@
-﻿namespace Application.DTOs.Identity
+﻿using Domain.Entities.Identity.Enums;
+
+namespace Application.DTOs.Identity
 {
     public class RegisterDto
     {
@@ -6,5 +8,6 @@
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public Roles Role = Roles.user;
     }
 }

@@ -42,5 +42,19 @@ namespace WebApi.Controllers.User
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpPut(ApiRoutes.Users.Login)]
+        public async Task<ActionResult<AuthResponseDto>> ChangeRole([FromBody] ChangeRole model)
+        {
+            try
+            {
+                var result = await _authService.ChangeUserRoleAsync(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

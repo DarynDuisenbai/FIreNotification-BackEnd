@@ -21,7 +21,10 @@ var database = mongoClient.GetDatabase(mongoSettings.DatabaseName);
 builder.Services.AddSingleton<IMongoDatabase>(database);
 
 // Добавляем MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(GetFiresByDateCommand).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+    typeof(GetFiresByDateCommand).Assembly,
+    typeof(GetFiresByDateHandler).Assembly
+));
 
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
@@ -93,7 +96,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

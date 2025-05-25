@@ -6,7 +6,7 @@
         public double Longitude { get; set; }
         public string Daynight { get; set; }
         public string? Address { get; set; }
-        public DateTime Time_fire { get; set; }
+        public DateTime? Time_fire { get; set; }
         public string? Photo { get; set; }
     }
 }

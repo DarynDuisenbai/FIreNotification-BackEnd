@@ -91,11 +91,15 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowVueApp",
-        policy => policy.WithOrigins("http://localhost:5173")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()); // Needed for JWT cookies
+    options.AddPolicy("AllowFrontendAndLocalhost", policy =>
+    {
+        policy.WithOrigins(
+                "https://firenotification-frondend.onrender.com",
+                "http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
 });
 
 var app = builder.Build();
@@ -106,7 +110,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowVueApp");
+app.UseCors("AllowFrontendAndLocalhost");
 // Важно: порядок middleware
 app.UseAuthentication();
 app.UseAuthorization();

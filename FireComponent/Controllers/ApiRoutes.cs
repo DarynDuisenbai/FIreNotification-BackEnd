@@ -21,5 +21,13 @@
         {
             public const string GetCrowdDataByUserId = Base + "/crowd/user/firedata";
         }
+        public static class WebHook
+        {
+            public const string AddWebHook = Base + "/webhook/add";
+            public const string GetAllWebHook = Base + "/webhook/getAll";
+            public const string UpdateWebhookStatus = Base + "/webhook/updateStatus";
+            public const string UpdateWebhook = Base + "/webhook/update";
+            public const string SendNotification = Base + "/webhook/sendNotification";
+        }
     }
 }

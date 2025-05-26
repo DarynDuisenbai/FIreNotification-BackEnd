@@ -1,9 +1,8 @@
-﻿using Domain.Entities.Identity;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
 
 namespace Domain.Entities.FireData
 {
-    [Collection(nameof(User))]
+    [Collection(nameof(CrowdSourcingData))]
     public class CrowdSourcingData
     {
         public string Id { get; set; }

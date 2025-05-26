@@ -3,7 +3,7 @@ using MongoDB.Entities;
 
 namespace Domain.Entities.FireData
 {
-    [Collection(nameof(User))]
+    [Collection(nameof(FireData))]
     public class FireData
     {
         public string Id { get; set; }

@@ -9,5 +9,7 @@ namespace Application.Interfaces
         Task<AuthResponseDto> LoginAsync(LoginDto model);
         Task<bool> ChangeUserRoleAsync(ChangeRole model);
         Task<bool> UploadProfilePhoto(EditProfilePhotoDto req);
+        Task<bool> SendVerificationCodeAsync(string email);
+        Task<bool> VerifyEmailAsync(string email, string code);
     }
 }

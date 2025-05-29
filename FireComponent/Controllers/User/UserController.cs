@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Identity;
+﻿using Application.DTOs.EmailDto;
+using Application.DTOs.Identity;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -68,6 +69,74 @@ namespace WebApi.Controllers.User
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost(ApiRoutes.Users.SendVerificationCode)]
+        public async Task<ActionResult<object>> SendVerificationCode([FromBody] SendVerificationCodeDto model)
+        {
+            try
+            {
+                var result = await _authService.SendVerificationCodeAsync(model.Email);
+
+                if (result)
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        message = "Код верификации отправлен на ваш email"
+                    });
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Не удалось отправить код верификации"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpPost(ApiRoutes.Users.VerifyEmail)]
+        public async Task<ActionResult<object>> VerifyEmail([FromBody] VerifyEmailDto model)
+        {
+            try
+            {
+                var result = await _authService.VerifyEmailAsync(model.Email, model.Code);
+
+                if (result)
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        message = "Email успешно верифицирован"
+                    });
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Неверный код или код истек"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
             }
         }
 

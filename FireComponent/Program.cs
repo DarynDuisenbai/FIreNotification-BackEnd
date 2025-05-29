@@ -11,6 +11,7 @@ using Application.Handlers.NasaHandler;
 using MongoDB.Driver;
 using Application.Service.CrowdService;
 using Application.Service.Integration;
+using Application.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,8 @@ builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("JwtSettings"));
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
 
 // Регистрация сервисов
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -41,6 +44,7 @@ builder.Services.AddScoped<IWebhookService, WebhookService>();
 builder.Services.AddHostedService<CoordinationService>();
 builder.Services.AddScoped<IPhotoVerificationService, PhotoVerificationService>();
 builder.Services.AddScoped<ICrowdService, CrowdService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Настройка JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

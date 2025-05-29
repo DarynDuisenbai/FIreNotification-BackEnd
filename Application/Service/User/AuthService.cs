@@ -8,7 +8,7 @@ using Infrastructure.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Application.DTOs.Identity;
-using Domain.Entities.Identity.Enums;
+using Domain.Entities.Identity;
 
 namespace Application.Service.User
 {
@@ -16,15 +16,20 @@ namespace Application.Service.User
     {
         private readonly IMongoCollection<Domain.Entities.Identity.User> _users;
         private readonly IOptions<JwtSettings> _jwtSettings;
+        private readonly IMongoCollection<EmailVerificationCode> _verificationCodes;
+        private readonly IEmailService _emailService;
 
         public AuthService(
             IOptions<MongoDbSettings> mongoSettings,
-            IOptions<JwtSettings> jwtSettings)
+            IOptions<JwtSettings> jwtSettings,
+            IEmailService emailService)
         {
             var client = new MongoClient(mongoSettings.Value.ConnectionString);
             var database = client.GetDatabase(mongoSettings.Value.DatabaseName);
             _users = database.GetCollection<Domain.Entities.Identity.User>("Users");
+            _verificationCodes = database.GetCollection<EmailVerificationCode>("EmailVerificationCodes");
             _jwtSettings = jwtSettings;
+            _emailService = emailService;
         }
 
         public async Task<AuthResponseDto> RegisterAsync(RegisterDto model)
@@ -118,5 +123,74 @@ namespace Application.Service.User
             return result.ModifiedCount > 0;
         }
 
+        public async Task<bool> SendVerificationCodeAsync(string email)
+        {
+            try
+            {
+                // Генерируем 6-значный код
+                var random = new Random();
+                var code = random.Next(100000, 999999).ToString();
+
+                // Удаляем старые неиспользованные коды для этого email
+                await _verificationCodes.DeleteManyAsync(x => x.Email == email && !x.IsUsed);
+
+                // Создаем новый код верификации
+                var verificationCode = new EmailVerificationCode
+                {
+                    Id = ObjectId.GenerateNewId().ToString(),
+                    Email = email,
+                    Code = code,
+                    ExpiresAt = DateTime.UtcNow.AddMinutes(15), // Код действителен 15 минут
+                    IsUsed = false
+                };
+
+                // Сохраняем код в базу данных
+                await _verificationCodes.InsertOneAsync(verificationCode);
+
+                // Отправляем код на email
+                await _emailService.SendVerificationCodeAsync(email, code);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> VerifyEmailAsync(string email, string code)
+        {
+            try
+            {
+                // Ищем действительный код
+                var verificationCode = await _verificationCodes
+                    .Find(x => x.Email == email &&
+                              x.Code == code &&
+                              !x.IsUsed &&
+                              x.ExpiresAt > DateTime.UtcNow)
+                    .FirstOrDefaultAsync();
+
+                if (verificationCode == null)
+                {
+                    return false; // Код не найден, неверный или истек
+                }
+
+                // Помечаем код как использованный
+                var filter = Builders<EmailVerificationCode>.Filter.Eq(x => x.Id, verificationCode.Id);
+                var update = Builders<EmailVerificationCode>.Update.Set(x => x.IsUsed, true);
+                await _verificationCodes.UpdateOneAsync(filter, update);
+
+                // Здесь можно также обновить статус пользователя как "верифицированный"
+                var userFilter = Builders<Domain.Entities.Identity.User>.Filter.Eq(u => u.Email, email);
+                var userUpdate = Builders<Domain.Entities.Identity.User>.Update.Set(u => u.IsEmailVerified, true);
+                await _users.UpdateOneAsync(userFilter, userUpdate);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

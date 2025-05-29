@@ -14,5 +14,6 @@ namespace Domain.Entities.Identity
         public Roles Roles { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Photo {  get; set; }
+        public bool IsEmailVerified { get; set; }
     }
 }

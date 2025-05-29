@@ -11,6 +11,8 @@
             public const string Login = Base + "/users/login";
             public const string ChangeRole = Base + "/users/changeRole";
             public const string UploadProfilePhoto = Base + "/users/uploadProfilePhoto";
+            public const string SendVerificationCode = Base + "/users/sendCodeEmail";
+            public const string VerifyEmail = Base + "/users/verifyEmail";
         }
         public static class Fire
         {

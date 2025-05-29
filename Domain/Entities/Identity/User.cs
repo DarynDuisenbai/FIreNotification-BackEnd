@@ -11,7 +11,7 @@ namespace Domain.Entities.Identity
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string PasswordHash { get; set; }
-        public Roles Roles { get; set; }
+        public string Roles { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Photo {  get; set; }
         public bool IsEmailVerified { get; set; }

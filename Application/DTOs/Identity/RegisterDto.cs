@@ -8,6 +8,6 @@ namespace Application.DTOs.Identity
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public Roles Role = Roles.user;
+        public string Role { get; set; } = Roles.User;
     }
 }

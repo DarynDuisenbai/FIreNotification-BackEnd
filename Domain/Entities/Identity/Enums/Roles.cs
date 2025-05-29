@@ -1,7 +1,16 @@
 ﻿namespace Domain.Entities.Identity.Enums
 {
-    public enum Roles
+    public static class Roles
     {
-        admin, user
+        public const string Admin = "admin";
+        public const string Manager = "manager";
+        public const string User = "user";
+
+        public static readonly string[] AllRoles = { Admin, Manager, User };
+
+        public static bool IsValidRole(string role)
+        {
+            return AllRoles.Contains(role, StringComparer.OrdinalIgnoreCase);
+        }
     }
 }

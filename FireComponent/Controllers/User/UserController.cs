@@ -44,20 +44,6 @@ namespace WebApi.Controllers.User
             }
         }
 
-        [HttpPut(ApiRoutes.Users.ChangeRole)]
-        public async Task<ActionResult<bool>> ChangeRole([FromBody] ChangeRole model)
-        {
-            try
-            {
-                var result = await _authService.ChangeUserRoleAsync(model);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
         [HttpPut(ApiRoutes.Users.UploadProfilePhoto)]
         public async Task<ActionResult<bool>> UploadProfilePhoto([FromBody] EditProfilePhotoDto req)
         {
@@ -140,5 +126,18 @@ namespace WebApi.Controllers.User
             }
         }
 
+        [HttpGet(ApiRoutes.Users.GetProfile)]
+        public async Task<ActionResult<bool>> GetProfile([FromQuery] string userId)
+        {
+            try
+            {
+                var result = await _authService.GetProfileAsync(userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

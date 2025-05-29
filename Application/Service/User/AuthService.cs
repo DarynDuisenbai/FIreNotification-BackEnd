@@ -106,7 +106,7 @@ namespace Application.Service.User
         }
         public async Task<bool> ChangeUserRoleAsync(ChangeRole model)
         {
-            var filter = Builders<Domain.Entities.Identity.User>.Filter.Eq(u => u.Username, model.Username);
+            var filter = Builders<Domain.Entities.Identity.User>.Filter.Eq(u => u.Id, model.UserId);
             var update = Builders<Domain.Entities.Identity.User>.Update.Set(u => u.Roles, model.Role);
 
             var result = await _users.UpdateOneAsync(filter, update);
@@ -191,6 +191,26 @@ namespace Application.Service.User
             {
                 return false;
             }
+        }
+
+        public async Task<UserProfileDto> GetProfileAsync(string userId)
+        {
+            var user = await _users.Find(x => x.Id == userId).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            return new UserProfileDto
+            {
+                Username = user.Username,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Photo = user.Photo,
+                Roles = user.Roles,
+                CreatedAt = user.CreatedAt
+            };
         }
     }
 }

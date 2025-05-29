@@ -11,5 +11,6 @@ namespace Application.Interfaces
         Task<bool> UploadProfilePhoto(EditProfilePhotoDto req);
         Task<bool> SendVerificationCodeAsync(string email);
         Task<bool> VerifyEmailAsync(string email, string code);
+        Task<UserProfileDto> GetProfileAsync(string userId);
     }
 }
